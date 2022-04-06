@@ -70,7 +70,69 @@ With this code I created a control using nest and the decorators with @ symbols
 
 -----------------------------------------------------
 
+## DECORADORES DO NEST :cat:
 
+-----------------------------------------------------
+
+Alguns decoradores: 
+```
+@Controller("url definitions") \\ recebe o valor de uma URL 
+@Get( ':id' )                  \\ Pode receber o valor de um ID ver decor @Param
+@Post( )                       \\ method Post
+@Put( ':id ' )                 \\ POde recebe um ID
+@Delete( ':id' )               \\ method delete pode receber ID
+
+@Param() value                 \\ parametro na url value = nome da var params
+@Body() value                  \\ váriavel que veem no corpo da req.
+```
+Após ser criado os methods para a API precisamos importar o Produtos Controller
+para o arquivo gerado no nest:cat: chamado de app.module.ts no campo. @modules -> Controller.
+
+OBS: todos os valores precisam ser importados dentro do import como 
+
+```javascript
+
+import { Body, Param, Post, Put, Get, Delete, Controller } from '@nestjs/common'
+
+```
+
+------------------------------------------------------------
+
+Código com todos os methods;
+
+------------------------------------------------------------
+
+
+```javascript
+/* eslint-disable prettier/prettier */
+import { Get, Controller, Param, Post, Body, Put, Delete } from '@nestjs/common';
+
+
+@Controller('produtos')
+export class ProdutosController{
+    @Get()
+    obterTodos(): string{
+        return "lista todos os produtos."
+    }
+    @Get(':id')
+    obterUm(@Param() params): string{
+        return `Retorna o valor de um produto ${params.id}`
+    }
+    @Post()
+    Criar(@Body() produto): string{
+        return `Retornou o produto criado ${produto.valor}`
+    }
+    @Put(':id')
+    Alterar(@Body() body, @Param() params): string{
+        return `O ID ${params.id} teve o produto ${body.valor} alterado`
+    }
+    @Delete(':id')
+    apagar(@Param() params):string{
+        return `O objeto de ID ${params.id} foi apagado`
+    }
+}   
+
+```
 
 
 
