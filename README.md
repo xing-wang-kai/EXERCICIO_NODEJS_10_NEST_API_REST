@@ -442,7 +442,6 @@ export class LivrosController{
 
 ----------------------------------------------------------------
 
-             :heart: :heart: :heart: FIM :heart: :heart: :heart:
-
+ :heart: :heart: :heart: FIM :heart: :heart: :heart:
 
 ----------------------------------------------------------------
