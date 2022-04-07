@@ -22,19 +22,19 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-# :cat: NODEJS - with NEST  
+# :cat: NODEJS - with NEST  :cat:
 
 ------------------------------------------------
 
-`npm install -g @nestjs/cli`
+- [x] :coffee: `npm install -g @nestjs/cli`
 
 This command installs nest js to use in the API.;
 
-`nest - v`
+- [x] :coffee: `nest - v`
 
-## Crate new project
+## :cat: Crate new project :cat:
 
-`nest new <project name>`
+- [x] :coffee: `nest new <project name>`
 
 This command Create a new nest project for use in the API;
 
@@ -45,12 +45,13 @@ This command Create a new nest project for use in the API;
 
 -------------------------------------------------------
 
-## CONTROLLER with NEST :cat:
+## :cat: CONTROLLER with NEST :cat:
 
 -------------------------------------------------------
 
 For declare controller using nest:
 
+:coffee: :heart: :coffe: :heart:
 ```javascript
 
 import { Controller, Get } from '@nestjs/common';
@@ -70,7 +71,7 @@ With this code I created a control using nest and the decorators with @ symbols
 
 -----------------------------------------------------
 
-## DECORADORES DO NEST :cat:
+## :cat: DECORADORES DO NEST :cat:
 
 -----------------------------------------------------
 
@@ -98,11 +99,11 @@ import { Body, Param, Post, Put, Get, Delete, Controller } from '@nestjs/common'
 
 ------------------------------------------------------------
 
-Código com todos os methods;
+### :cat: Código com todos os methods :cat: ;
 
 ------------------------------------------------------------
 
-
+:coffee:
 ```javascript
 /* eslint-disable prettier/prettier */
 import { Get, Controller, Param, Post, Body, Put, Delete } from '@nestjs/common';
@@ -133,6 +134,116 @@ export class ProdutosController{
 }   
 
 ```
+Podemos também informar o status HTTP de uma operação usando o decorador.
+@HttpCode(200)
+
+```javascript
+
+@Get()
+@HttpCode(200)
+BuscarTodas(): Pessoas[]{
+  return Pessoas;
+}
+
+```
 
 
+---------------------------------------------------------
 
+## :cat: USANDO INJECT PARA TRABALHAR COM class :cat:
+ 
+--------------------------------------------------------
+
+O nest:cat: possui vantagens quando queremos usar outras class
+no exemplo do exercicio feito usamos o decorador @Injectable() 
+e desta maneira conseguimos envocar a class dentro do projeto
+sem precisar instanciar a mesma com new.
+
+Preciso lembrar que quando uma class decorada com Injectable 
+é importante adicionar em app.module o chamado para class.
+Isso é realizado em.
+
+```javascript
+  @Module({
+      imports: [],
+      controllers: [AppController, ProdutosController],
+      providers: [AppService, ProdutosServices],
+    })
+    export class AppModule {}
+```
+
+Conforme o exemplo acima adicionamos a class em Provideres.
+
+na class que usaremos com serviço faremos::
+
+```javascript
+@Injectable()
+export class ProdutosServices{
+    produto: Produtos[] = [
+        new Produtos('livro01', 'Aulas de TDD com javascript', 29.90),
+        new Produtos('livro02', 'Orientação a OBJS Javascript', 59.90),
+        new Produtos('livro03', 'Map ForEach Reduce and Filter javascript', 29.90),
+    ]
+//demais funções do method.(como buscar buscarUm criar deletar atualizar...)
+}
+```
+
+quando chamado no projeto, dentro da class do controller decorado
+pelo method do nest usamos então somente um constructor para class
+lembrando de importar a mesma no projeto.
+
+```javascript
+@Controller('produtos')
+export class ProdutosController{
+
+    constructor( private ProdutosServices: ProdutosServices){
+
+    }
+
+    @Get()
+    @HttpCode(200)
+    obterTodos(): Produtos[]{
+        return this.ProdutosServices.bucarProdutos();
+    }
+    @Get(':id')
+    @HttpCode(200)
+    obterUm(@Param() params): Produtos{
+        return this.ProdutosServices.buscarUm(params.id);
+    }
+    @Post()
+    @HttpCode(201)
+    Criar(@Body() valor): Produtos[]{
+        return this.ProdutosServices.criar(valor);
+    }
+    @Put(':id')
+    @HttpCode(200)
+    Alterar(@Body() body, @Param() params): Produtos[]{
+        return this.ProdutosServices.atualizar(params.id, body);
+    }
+    @Delete(':id')
+    @HttpCode(200)
+    apagar(@Param() params):Produtos[]{
+        return this.ProdutosServices.deletar(params.id);
+    }
+}   
+```
+
+Conforme o código acima usamos os methods buscarProduto, buscarUm
+criar, deletar e atualizar da class do services para dentro do 
+controle sem precisar instanciar, somente chamando ela dentro do 
+constructor da class ````controller```
+
+----------------------------------------------------------------
+
+### :cat: INTEGRACAO COM O SQL :cat:
+
+----------------------------------------------------------------
+
+Para entregar o projeto ao sql precisamos de algumas dependencias no projeto
+sendo elas..
+
+- [x] :coffee: `npm install --save-dev @nestjs/sequelize`
+- [x] :coffee: `npm install --save-dev sequelize`
+- [x] :coffee: `npm install --save-dev sequelize-typescript`
+- [x] :coffee: `npm install --save-dev mysql2`
+- [x] :coffee: `npm install --save-dev @types/sequelize`
