@@ -8,32 +8,35 @@ import { Livros } from '../models/Livros.models';
 export class LivrosController{
 
     constructor( private LivrosServices: LivrosServices){
-
     }
 
     @Get()
     @HttpCode(200)
-    obterTodos(): Livros[]{
+    async obterTodos(): Promise<Livros[]>{
         return this.LivrosServices.bucarLivros();
     }
+    
     @Get(':id')
     @HttpCode(200)
-    obterUm(@Param() params): Livros{
+    async  obterUm(@Param() params): Promise<Livros>{
         return this.LivrosServices.buscarUm(params.id);
     }
+
     @Post()
     @HttpCode(201)
-    Criar(@Body() valor): Livros[]{
+    async Criar(@Body() valor){
         return this.LivrosServices.criar(valor);
     }
+
     @Put(':id')
     @HttpCode(200)
-    Alterar(@Body() body, @Param() params): Livros[]{
+    async Alterar(@Body() body, @Param() params){
         return this.LivrosServices.atualizar(params.id, body);
     }
+
     @Delete(':id')
     @HttpCode(200)
-    apagar(@Param() params):Livros[]{
+    async apagar(@Param() params){
         return this.LivrosServices.deletar(params.id);
     }
 }   

@@ -1,35 +1,30 @@
 /* eslint-disable prettier/prettier */
 
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from '@nestjs/sequelize';
 import { Livros } from "src/models/Livros.models";
 
 @Injectable()
 export class LivrosServices{
-    livro: Livros[] = [
-        new Livros('livro01', 'Aulas de TDD com javascript', 29.90),
-        new Livros('livro02', 'Orientação a OBJS Javascript', 59.90),
-        new Livros('livro03', 'Map ForEach Reduce and Filter javascript', 29.90),
-    ]
+    constructor(
+        @InjectModel(Livros)
+        private livroModel: typeof Livros
+    ){}
+   
 
-    bucarLivros(): Livros[]{
-        return this.livro;
+    async bucarLivros(): Promise<Livros[]>{
+        return this.livroModel.findAll();
     }
-    buscarUm(id: number): Livros{
-        return this.livro[id-1];
+    async buscarUm(id: number): Promise<Livros>{
+        return this.livroModel.findOne({where:{id: id}});
     }
-    criar(valores): Livros[]{
-        const newlivro = new Livros(valores.codigo, valores.nome, valores.preco);
-        this.livro.push(newlivro);
-        return this.livro;
+    async criar(valores): Promise<Livros>{
+       return this.livroModel.create(valores);
     }
-    atualizar(id, valores): Livros[]{
-        this.livro[id-1].codigo = valores.codigo;
-        this.livro[id-1].nome = valores.nome;
-        this.livro[id-1].preco = valores.preco;
-        return this.livro;
+    async atualizar(id: number, valores: Livros){
+        return this.livroModel.update(valores, {where: { id: id}});
     }
-    deletar(id): Livros[]{
-        this.livro.splice(id-1, 1);
-        return this.livro
+    async deletar(id: number): Promise<number>{
+        return this.livroModel.destroy({where: {id: id}})
     }
 }

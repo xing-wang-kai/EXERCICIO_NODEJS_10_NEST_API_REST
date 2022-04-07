@@ -280,3 +280,169 @@ adicionar as informações corretas para o SequelizeModule.
 
 Desta maneira será instanciado um novo banco de dados. conforme a documentação
 do @nest/sequelize :cat: 
+
+Assim que executado o código acima existe alguns recursos do nest com o 
+sequelize que poderão ser usados como novos decoradores de tabelas
+e colunas.
+
+Neste sentido, retornando então ao livros.modelos.ts então será usado o 
+código @Table do Sequelize-typescript para indiciar a tabela, 
+na sequencia será usado os methods decorados @columns({}) que recebe 
+os valores do sequelize para implementar os banco de dados ... os decoradores
+@Columns são colocados antes dos attributes para indicar que aquela é uma 
+coluna.
+
+Ex.;
+
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
+```javascript
+
+import { Column, Model, Table, DataType } from "sequelize-typescript";
+@Table
+export class Livros extends Model<Livros>{
+    @Column({
+        type: DataType.INTEGER, 
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+    })
+     id: number;
+     @Column({
+        type: DataType.STRING(60), 
+        allowNull: false,
+        
+    })
+     codigo: string;
+     @Column({
+        type: DataType.STRING(60), 
+        allowNull: false,
+        
+    })
+     nome: string;
+     @Column({
+        type: DataType.INTEGER, 
+        allowNull: false,
+        
+    })
+     preco: number;
+}
+```
+
+O :cat: nest :cat: possui outros methods com o TypeORM integrado
+para executar os banco de dados.
+
+-----------------------------------------------------------------
+
+### :cat: ADICIONADO O MODELS :cat:
+
+----------------------------------------------------------------
+
+Em Serviçes precisamos adicionar outro decorador dentro do 
+construtor da class LivrosServices, este Decorador de modelos irá
+buscar o banco de dados Livros em models e instaciar os livros
+jogando os mesmo no bnc dados.
+
+Importante lembrar que as funcões retornam uma promesa então usamos
+async na frete dos methods..
+
+para isso criamos..
+
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
+```javascript
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from '@nestjs/sequelize';
+import { Livros } from "src/models/Livros.models";
+
+@Injectable()
+export class LivrosServices{
+    constructor(
+        @InjectModel(Livros)
+        private livroModel: typeof Livros
+    ){}
+   
+
+    async bucarLivros(): Promise<Livros[]>{
+        return this.livroModel.findAll();
+    }
+    async buscarUm(id: number): Promise<Livros>{
+        return this.livroModel.findOne({where:{id: id}});
+    }
+    async criar(valores): Promise<Livros>{
+       return this.livroModel.create(valores);
+    }
+    async atualizar(id: number, valores: Livros){
+        return this.livroModel.update(valores, {where: { id: id}});
+    }
+    async deletar(id: number): Promise<number>{
+        return this.livroModel.destroy({where: {id: id}})
+    }
+}
+```
+
+Conforme o modelo acima no cosntructor adicionado tambem o attribute
+private LivroModels com o typeof de Livros e com ele executamos
+nossos serviços para o crud com findAll findByPk findOne Create Update e delete
+o type do tipscript é Promise com parametros <Livros[]> em casos de array
+methods sem retorno de livros como deletar podem ficar sem a tipagem.
+
+-----------------------------------------------------------------
+
+### :cat: ADICIONADO AO CONTROLLER :cat: 
+
+-----------------------------------------------------------------
+
+Para finalizar o projeto ajustamos os valores dentro do controller.
+para isso tipamos os methods como Promise<livros[]> ou Promise<Livro> e
+Chamamos o devido methods do serviçes para nosso banco de dados.
+
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
+```javascript
+import { Get, Controller, Param, Post, Body, Put, Delete, HttpCode } from '@nestjs/common';
+import { LivrosServices } from 'src/services/Livros.service';
+import { Livros } from '../models/Livros.models';
+
+
+@Controller('Livros')
+export class LivrosController{
+
+    constructor( private LivrosServices: LivrosServices){
+    }
+
+    @Get()
+    @HttpCode(200)
+    async obterTodos(): Promise<Livros[]>{
+        return this.LivrosServices.bucarLivros();
+    }
+    
+    @Get(':id')
+    @HttpCode(200)
+    async  obterUm(@Param() params): Promise<Livros>{
+        return this.LivrosServices.buscarUm(params.id);
+    }
+
+    @Post()
+    @HttpCode(201)
+    async Criar(@Body() valor){
+        return this.LivrosServices.criar(valor);
+    }
+
+    @Put(':id')
+    @HttpCode(200)
+    async Alterar(@Body() body, @Param() params){
+        return this.LivrosServices.atualizar(params.id, body);
+    }
+
+    @Delete(':id')
+    @HttpCode(200)
+    async apagar(@Param() params){
+        return this.LivrosServices.deletar(params.id);
+    }
+}   
+```
+
+----------------------------------------------------------------
+
+             :heart: :heart: :heart: FIM :heart: :heart: :heart:
+
+
+----------------------------------------------------------------
