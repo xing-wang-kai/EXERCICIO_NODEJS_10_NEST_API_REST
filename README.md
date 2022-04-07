@@ -76,7 +76,8 @@ With this code I created a control using nest and the decorators with @ symbols
 -----------------------------------------------------
 
 Alguns decoradores: 
-```
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
+```javascript
 @Controller("url definitions") \\ recebe o valor de uma URL 
 @Get( ':id' )                  \\ Pode receber o valor de um ID ver decor @Param
 @Post( )                       \\ method Post
@@ -91,6 +92,7 @@ para o arquivo gerado no nest:cat: chamado de app.module.ts no campo. @modules -
 
 OBS: todos os valores precisam ser importados dentro do import como 
 
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 
 import { Body, Param, Post, Put, Get, Delete, Controller } from '@nestjs/common'
@@ -103,7 +105,7 @@ import { Body, Param, Post, Put, Get, Delete, Controller } from '@nestjs/common'
 
 ------------------------------------------------------------
 
-:coffee:
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 /* eslint-disable prettier/prettier */
 import { Get, Controller, Param, Post, Body, Put, Delete } from '@nestjs/common';
@@ -136,7 +138,7 @@ export class ProdutosController{
 ```
 Podemos também informar o status HTTP de uma operação usando o decorador.
 @HttpCode(200)
-
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 
 @Get()
@@ -162,7 +164,7 @@ sem precisar instanciar a mesma com new.
 Preciso lembrar que quando uma class decorada com Injectable 
 é importante adicionar em app.module o chamado para class.
 Isso é realizado em.
-
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
   @Module({
       imports: [],
@@ -175,7 +177,7 @@ Isso é realizado em.
 Conforme o exemplo acima adicionamos a class em Provideres.
 
 na class que usaremos com serviço faremos::
-
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 @Injectable()
 export class ProdutosServices{
@@ -191,7 +193,7 @@ export class ProdutosServices{
 quando chamado no projeto, dentro da class do controller decorado
 pelo method do nest usamos então somente um constructor para class
 lembrando de importar a mesma no projeto.
-
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 @Controller('produtos')
 export class ProdutosController{
