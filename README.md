@@ -51,7 +51,7 @@ This command Create a new nest project for use in the API;
 
 For declare controller using nest:
 
-:coffee: :heart: :coffe: :heart:
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 
 import { Controller, Get } from '@nestjs/common';
