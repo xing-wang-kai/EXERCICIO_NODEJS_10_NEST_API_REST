@@ -76,6 +76,7 @@ With this code I created a control using nest and the decorators with @ symbols
 -----------------------------------------------------
 
 Alguns decoradores: 
+
 :coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 @Controller("url definitions") \\ recebe o valor de uma URL 
@@ -138,6 +139,7 @@ export class ProdutosController{
 ```
 Podemos também informar o status HTTP de uma operação usando o decorador.
 @HttpCode(200)
+
 :coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 
@@ -164,6 +166,7 @@ sem precisar instanciar a mesma com new.
 Preciso lembrar que quando uma class decorada com Injectable 
 é importante adicionar em app.module o chamado para class.
 Isso é realizado em.
+
 :coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
   @Module({
@@ -177,6 +180,7 @@ Isso é realizado em.
 Conforme o exemplo acima adicionamos a class em Provideres.
 
 na class que usaremos com serviço faremos::
+
 :coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
 ```javascript
 @Injectable()
@@ -249,3 +253,30 @@ sendo elas..
 - [x] :coffee: `npm install --save-dev sequelize-typescript`
 - [x] :coffee: `npm install --save-dev mysql2`
 - [x] :coffee: `npm install --save-dev @types/sequelize`
+
+Após a dependências adicionadas precisamos adicionar as informações
+em nosso api.modelo para construir o banco no sql.
+
+obs: é importante já ter criado a database no sql, e também
+adicionar as informações corretas para o SequelizeModule.
+
+:coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart::coffee: :heart: :coffee: :heart:
+```javascript
+@Module({
+  imports: [
+    SequelizeModule.forRoot({
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'hoot',
+      database: 'livraria',
+      autoLoadModels: true,
+      synchronize: true
+    }),
+    SequelizeModule.forFeature([Livros])
+  ],
+```
+
+Desta maneira será instanciado um novo banco de dados. conforme a documentação
+do @nest/sequelize :cat: 
